@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+set -o errexit
+
+USAGE=$'Usage:
+  deploy-guardian [options]
+
+Deploy a one time job to Metronome that executes the latest Docker image of kixi.event-log-guardian passing the relavant args.
+
+  -v,--version           docker image version, use git-sha version, eg "git-a6f66ec6b7221d42c8fe4d8c9061c69f096642ef"
+'
+
+VERSION=
+
+#read options
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+  -h|--help) HELP=1 ; shift ;;
+  -v|--version) VERSION=$2 ; shift 2 ;;
+  *)    # unknown option
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+
+if [[ "$HELP" -eq 1 ]]; then
+   echo "$USAGE";
+   exit 1;
+fi
+
+if [[ -z "$VERSION" ]]; then
+  echo "INVALID -v|--version of job must be specified.";
+  exit 1;
+fi
+
+
+OWNER=`id --name -u`
+JOB_NAME="event-log-guardian.by-$OWNER"
+
+echo "Building Metronome Job definition"
+
+sed -e "s/@@OWNER@@/$OWNER/" \
+    -e "s/@@VERSION@@/$VERSION/" \
+    ./deployment/metronome_template.json \
+    > metronome.json
+
+echo "Deploying Job $JOB_NAME"
+dcos job add metronome.json
+echo "Executing Job"
+dcos job run $JOB_NAME

@@ -1,0 +1,21 @@
+{
+  "id": "@@JOB_NAME@@",
+  "description": "@@JOB_NAME@@",
+  "labels": {
+    "owner": "@@OWNER@@"
+  },
+  "run": {
+      "cpus": 0.5,
+      "mem": 512,
+      "disk": 0,
+      "restart": {
+          "policy": "NEVER",
+          "activeDeadlineSeconds": 0
+      },
+      "docker": {
+          "image": "mastodonc/kixi.event-log-guardian:@@VERSION@@"
+      },
+      "env": {
+      }
+  }
+}
