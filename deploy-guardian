@@ -62,7 +62,7 @@ fi
 
 
 OWNER=`id --name -u`
-JOB_NAME="event-log-guardian.by-$OWNER"
+JOB_NAME="event-log-guardian"
 
 echo "Building Metronome Job definition"
 
@@ -77,5 +77,5 @@ sed -e "s/@@OWNER@@/$OWNER/" \
 
 echo "Deploying Job $JOB_NAME"
 dcos job add metronome.json
-echo "Executing Job"
-dcos job run $JOB_NAME
+
+echo "You MUST now go and configure the schedule for the job in the dcos job definition!"
