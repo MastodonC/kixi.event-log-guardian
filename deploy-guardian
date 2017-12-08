@@ -67,6 +67,7 @@ JOB_NAME="event-log-guardian.by-$OWNER"
 echo "Building Metronome Job definition"
 
 sed -e "s/@@OWNER@@/$OWNER/" \
+    -e "s/@@JOB_NAME@@/$JOB_NAME/" \
     -e "s/@@VERSION@@/$VERSION/" \
     -e "s/@@BUCKET_NAME@@/$BUCKET_NAME/" \
     -e "s/@@REGION@@/$REGION/" \
