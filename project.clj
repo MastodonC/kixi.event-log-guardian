@@ -1,6 +1,6 @@
 (def metrics-version "2.7.0")
 (def slf4j-version "1.7.21")
-(defproject kixi.event-log-guardian "0.1.0-SNAPSHOT"
+(defproject kixi.event-log-guardian "0.1.0"
   :description "Event Kinesis to S3 journey checker."
   :url "http://github.com/MastodonC/kixi.event-log-guardian"
   :license {:name "Eclipse Public License"
