@@ -16,6 +16,9 @@
           "image": "mastodonc/kixi.event-log-guardian:@@VERSION@@"
       },
       "env": {
+          "BUCKET_NAME": "@@BUCKET_NAME@@",
+          "REGION": "@@REGION@@",
+          "STREAM_NAME": "@@STREAM_NAME@@"
       }
   }
 }
