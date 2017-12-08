@@ -20,5 +20,14 @@
           "REGION": "@@REGION@@",
           "STREAM_NAME": "@@STREAM_NAME@@"
       }
-  }
+  },
+  "schedules": [
+          {
+              "id": "check-event-safety-nightly",
+              "enabled": true,
+              "cron": "0 4 * * *",
+              "timezone": "UTC"
+          }
+      ]
+
 }
