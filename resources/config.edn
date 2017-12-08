@@ -1,1 +1,10 @@
-{}
+{:bucket-name #env BUCKET_NAME
+ :region #env REGION
+ :stream-name #env STREAM_NAME
+ :logging {:level :info ; e/o #{:trace :debug :info :warn :error :fatal :report}
+           ;; Control log filtering by namespaces/patterns. Useful for turning off
+           ;; logging in noisy libraries, etc.:
+           ;;:ns-whitelist  ["whiner.*"] #_["my-app.foo-ns"]
+           :ns-blacklist ["org.apache.http"
+                          "com.amazonaws"]
+           :appender :json}}

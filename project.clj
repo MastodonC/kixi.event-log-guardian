@@ -7,12 +7,12 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[aero "1.1.2"]
                  [amazonica "0.3.92" :exclusions [ch.qos.logback/logback-classic
-                                                  com.amazonaws/aws-java-sdk
+                                                  com.amazonaws/aws-java-sdk-logs
                                                   commons-logging
-                                                  org.apache.httpcomponents/httpclient
                                                   joda-time]]
                  [baldr "0.1.1"]
-                 [com.amazonaws/aws-java-sdk "1.11.53" :exclusions [joda-time]]
+                 [com.fzakaria/slf4j-timbre "0.3.7"]
+                 [com.taoensso/timbre "4.10.0"]
                  [clj-time "0.14.2"]
                  [kixi/kixi.log "0.1.5"]
                  [org.clojure/clojure "1.9.0-RC2"]

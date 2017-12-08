@@ -25,6 +25,6 @@
   (instance? org.joda.time.DateTime x))
 
 (s/def ::config
-  (s/keys :req [::bucket-name
-                ::region
-                ::stream-name]))
+  (s/keys :req-un [::bucket-name
+                   ::region
+                   ::stream-name]))
