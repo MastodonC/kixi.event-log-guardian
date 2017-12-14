@@ -9,6 +9,9 @@ USAGE=$'Usage:
 Deploy a one time job to Metronome that executes the latest Docker image of kixi.event-log-guardian passing the relavant args.
 
   -v,--version           docker image version, use git-sha version, eg "git-a6f66ec6b7221d42c8fe4d8c9061c69f096642ef"
+  -s,--stream            name of the stream to check
+  -b,--bucket-name       bucket where the stream is being stored
+  -r,--region            region of both stream and bucket
 '
 
 VERSION=
@@ -23,6 +26,9 @@ key="$1"
 case $key in
   -h|--help) HELP=1 ; shift ;;
   -v|--version) VERSION=$2 ; shift 2 ;;
+  -s|--stream) STREAM_NAME=$2 ; shift 2 ;;
+  -b|--bucket-name) BUCKET_NAME=$2 ; shift 2 ;;
+  -r|--region) REGION=$2 ; shift 2 ;;
   *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
     shift # past argument
@@ -41,19 +47,34 @@ if [[ -z "$VERSION" ]]; then
   echo "INVALID -v|--version of job must be specified.";
   exit 1;
 fi
+if [[ -z "$STREAM_NAME" ]]; then
+  echo "INVALID -s|--stream must be specified.";
+  exit 1;
+fi
+if [[ -z "$BUCKET_NAME" ]]; then
+  echo "INVALID -b|--bucket-name bucket must be specified.";
+  exit 1;
+fi
+if [[ -z "$REGION" ]]; then
+  echo "INVALID -r|--region region must be specified.";
+  exit 1;
+fi
 
 
 OWNER=`id --name -u`
-JOB_NAME="event-log-guardian.by-$OWNER"
+JOB_NAME="event-log-guardian"
 
 echo "Building Metronome Job definition"
 
 sed -e "s/@@OWNER@@/$OWNER/" \
+    -e "s/@@JOB_NAME@@/$JOB_NAME/" \
     -e "s/@@VERSION@@/$VERSION/" \
+    -e "s/@@BUCKET_NAME@@/$BUCKET_NAME/" \
+    -e "s/@@REGION@@/$REGION/" \
+    -e "s/@@STREAM_NAME@@/$STREAM_NAME/" \
     ./deployment/metronome_template.json \
     > metronome.json
 
 echo "Deploying Job $JOB_NAME"
 dcos job add metronome.json
-echo "Executing Job"
-dcos job run $JOB_NAME
+echo "You MUST now go and configure the schedule for the job in the dcos job definition!"

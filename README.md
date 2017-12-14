@@ -1,10 +1,12 @@
 # kixi.event-log-guardian
 
-A Clojure library designed to ... well, that part is up to you.
+A metronome job for checking the Events put onto a Kinesis stream arrive in S3.
 
 ## Usage
 
-FIXME
+Example for stagin:
+
+./deploy-guardian -s staging-witan-event -r eu-central-1 -b staging-witan-event-log -v git-1cf367d686492feacba85f0710a10361d7019132
 
 ## License
 
