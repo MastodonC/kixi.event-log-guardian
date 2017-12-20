@@ -5,7 +5,7 @@
 (s/def ::bucket-name
   (s/with-gen
     (s/and string?
-           #(re-matches #"(?:staging|prod)-witan-event-log" %))
+           #(re-matches #"^(?:staging|prod)-witan-event-log(?:-\d{8})?$" %))
     #(gen/elements ["staging-witan-event-log"
                     "prod-witan-event-log"])))
 (s/def ::key
