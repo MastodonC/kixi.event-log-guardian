@@ -41,9 +41,9 @@
               :s3-count s3-count
               :date (t/yesterday)}]
     (if (= s3-count cw-count)
-      (log/info (str "Event count comparison successful: " data))
-      (log/fatal (str "Event count comparison between CloudWatch and S3 failed: "
-                      data)))))
+      (log/info "Event count comparison: success")
+      (log/error "Event count comparison: failure"))
+    (log/info (str "Event count comparison: " data))))
 
 (defn exit
   [status msg]
