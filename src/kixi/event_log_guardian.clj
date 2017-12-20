@@ -43,7 +43,7 @@
     (if (= s3-count cw-count)
       (log/infof "Event count comparison: success")
       (log/errorf "Event count comparison: failure"))
-    (log/infof "Event count comparison: %s" data)))
+    (log/infof "Event count comparison: %s" (str data))))
 
 (defn exit
   [status msg]
