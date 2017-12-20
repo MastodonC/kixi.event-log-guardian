@@ -2,6 +2,7 @@
   (:gen-class)
   (:require [aero.core :as aero]
             [clj-time.core :as t]
+            [clj-time.format :as tf]
             [clojure.spec.alpha :as s]
             [clojure.java.io :as io]
             [clojure.pprint :refer [pprint]]
@@ -38,12 +39,12 @@
   (let [s3-count (s3/get-event-count-for-day config (t/yesterday))
         cw-count (cloudwatch/get-event-count-for-day config (t/yesterday))
         data {:cloudwatch-count cw-count
-              :s3-count s3-count
-              :date (t/yesterday)}]
+              :s3-count         s3-count
+              :date             (tf/unparse (tf/formatters :basic-date-time) (t/yesterday))}]
     (if (= s3-count cw-count)
-      (log/info "Event count comparison: success")
-      (log/error "Event count comparison: failure"))
-    (log/info (str "Event count comparison: " data))))
+      (log/infof "Event count comparison: success")
+      (log/errorf "Event count comparison: failure"))
+    (log/infof "Event count comparison: %s" data)))
 
 (defn exit
   [status msg]
