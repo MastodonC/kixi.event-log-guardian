@@ -26,7 +26,6 @@
                       :appenders (case (get-in config [:logging :appender])
                                    :println {:println (log/println-appender)}
                                    :json {:direct-json (kixi-log/timbre-appender-logstash)})}]
-    (print level-config)
     (log/set-config! level-config)
     (log/handle-uncaught-jvm-exceptions!
      (fn [throwable ^Thread thread]
