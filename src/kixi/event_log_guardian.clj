@@ -31,19 +31,21 @@
      (fn [throwable ^Thread thread]
        (log/fatal throwable (str "Unhandled exception on " (.getName thread)))))))
 
+
 (defn execute
   [config]
   (configure-logging config)
   (log/debug (str "Configuration: " config))
-  (let [s3-count (s3/get-event-count-for-day config (t/yesterday))
-        cw-count (cloudwatch/get-event-count-for-day config (t/yesterday))
-        data {:cloudwatch-count cw-count
-              :s3-count         s3-count
-              :date             (tf/unparse (tf/formatters :basic-date-time) (t/yesterday))}]
-    (if (= s3-count cw-count)
-      (log/infof "Event count comparison: success")
-      (log/errorf "Event count comparison: failure"))
-    (log/infof "Event count comparison: %s" (str data))))
+  (doseq [x (range 1 (:days-in-the-past config))]
+    (let [s3-count (s3/get-event-count-for-day config (t/minus (t/today) (t/days x)))
+          cw-count (cloudwatch/get-event-count-for-day config (t/minus (t/today) (t/days x)))
+          data {:cloudwatch-count cw-count
+                :s3-count         s3-count
+                :date             (tf/unparse (tf/formatters :basic-date-time) (t/minus (t/today) (t/days x)))}]
+      (if (= s3-count cw-count)
+        (log/infof "Event count comparison: success")
+        (log/errorf "Event count comparison: failure"))
+      (log/infof "Event count comparison: %s" (str data)))))
 
 (defn exit
   [status msg]

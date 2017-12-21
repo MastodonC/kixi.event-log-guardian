@@ -20,6 +20,14 @@
   (s/keys :req [::bucket-name
                 ::key]))
 
+(defn -integer?
+ [x]
+ (cond (string? x) (Integer/valueOf x)
+       (clojure.core/integer? x) x
+       :else ::s/invalid))
+
+(s/def ::days-in-the-past (s/conformer -integer?))
+
 (defn time?
   [x]
   (instance? org.joda.time.DateTime x))
