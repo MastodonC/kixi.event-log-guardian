@@ -35,4 +35,5 @@
 (s/def ::config
   (s/keys :req-un [::bucket-name
                    ::region
-                   ::stream-name]))
+                   ::stream-name
+                   ::days-in-the-past]))
