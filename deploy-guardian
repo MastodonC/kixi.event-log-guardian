@@ -77,4 +77,3 @@ sed -e "s/@@OWNER@@/$OWNER/" \
 
 echo "Deploying Job $JOB_NAME"
 dcos job add metronome.json
-echo "You MUST now go and configure the schedule for the job in the dcos job definition!"

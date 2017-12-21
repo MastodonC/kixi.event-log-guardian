@@ -23,6 +23,7 @@
   },
   "schedules": [
           {
+              "concurrencyPolicy": "ALLOW",
               "id": "check-event-safety-nightly",
               "enabled": true,
               "cron": "0 4 * * *",
