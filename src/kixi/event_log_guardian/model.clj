@@ -26,7 +26,7 @@
        (clojure.core/integer? x) x
        :else ::s/invalid))
 
-(s/def ::days-in-the-past (s/conformer -integer?))
+(s/def ::days-in-the-past (s/conformer -integer? identity))
 
 (defn time?
   [x]
