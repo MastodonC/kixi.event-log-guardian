@@ -18,7 +18,8 @@
       "env": {
           "BUCKET_NAME": "@@BUCKET_NAME@@",
           "REGION": "@@REGION@@",
-          "STREAM_NAME": "@@STREAM_NAME@@"
+          "STREAM_NAME": "@@STREAM_NAME@@",
+          "DAYS_IN_THE_PAST": "@@DAYS_IN_THE_PAST@@"
       }
   },
   "schedules": [

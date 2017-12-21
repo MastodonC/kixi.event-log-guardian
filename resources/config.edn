@@ -7,4 +7,5 @@
            ;;:ns-whitelist  ["whiner.*"] #_["my-app.foo-ns"]
            :ns-blacklist ["org.apache.http"
                           "com.amazonaws"]
-           :appender :json}}
+           :appender :json}
+ :days-in-the-past #env DAYS_IN_THE_PAST}
