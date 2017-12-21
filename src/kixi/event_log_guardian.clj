@@ -36,7 +36,7 @@
   [config]
   (configure-logging config)
   (log/debug (str "Configuration: " config))
-  (for [x (range 1 (:days-in-the-past config))]
+  (doseq [x (range 1 (:days-in-the-past config))]
     (let [s3-count (s3/get-event-count-for-day config (t/minus (t/today) (t/days x)))
           cw-count (cloudwatch/get-event-count-for-day config (t/minus (t/today) (t/days x)))
           data {:cloudwatch-count cw-count
